@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-yellow: #fde047;
+  --color-brand-purple: #aa3bff;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: #000000;
+    color: #f3f4f6;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+  }
+  
+  /* Reset default styles */
+  #root {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-inline: none;
+    text-align: left;
+  }
+}
+
+/* Spotlight beam for mobile (centered, straight down) */
+.lamp-light-beam {
+  background: linear-gradient(
+    to bottom,
+    rgba(251, 191, 36, 0.26) 0%,
+    rgba(251, 191, 36, 0.08) 45%,
+    rgba(251, 191, 36, 0.02) 75%,
+    transparent 100%
+  );
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 850px;
+  height: 266px; /* Bounded height to stop at floor base level */
+  clip-path: polygon(calc(50% - 15px) 0px, calc(50% + 15px) 0px, calc(50% + 180px) 100%, calc(50% - 180px) 100%);
+  filter: blur(16px);
+}
+
+/* Spotlight beam for desktop (symmetrical straight down around the left floor lamp at x=225px) */
+@media (min-width: 768px) {
+  .md\:lamp-light-beam-desktop {
+    background: linear-gradient(
+      to bottom,
+      rgba(251, 191, 36, 0.26) 0%,
+      rgba(251, 191, 36, 0.08) 35%,
+      rgba(251, 191, 36, 0.02) 65%,
+      transparent 100%
+    ) !important;
+    clip-path: polygon(210px calc(50vh - 106px), 240px calc(50vh - 106px), 405px calc(50vh + 160px), 45px calc(50vh + 160px)) !important;
+    filter: blur(18px) !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    left: 0 !important;
+    transform: none !important;
+    top: 0 !important;
+  }
+}
+
+/* Floor surface light pool reflection */
+.lamp-floor-glow {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(251, 191, 36, 0.45) 0%,
+    rgba(251, 191, 36, 0.15) 30%,
+    rgba(251, 191, 36, 0.02) 60%,
+    transparent 80%
+  );
+  filter: blur(10px);
+}
+
+.lamp-floor-glow-responsive {
+  top: 366px; /* Aligns with floor base on mobile */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: 768px) {
+  .md\:lamp-floor-glow-desktop {
+    left: 225px !important;
+    top: calc(50vh + 160px) !important; /* Aligns with floor base on desktop */
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+.lamp-light-beam-glow {
+  background: radial-gradient(
+    circle at center top,
+    rgba(251, 191, 36, 0.45) 0%,
+    rgba(251, 191, 36, 0.15) 25%,
+    rgba(251, 191, 36, 0.02) 50%,
+    transparent 70%
+  );
+  filter: blur(16px);
+}
+
+.lamp-light-beam-glow-responsive {
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: 768px) {
+  .md\:lamp-light-beam-glow-desktop {
+    left: 225px !important;
+    top: calc(50vh - 106px) !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+/* Warm background gradient when lamp is ON */
+.lamp-on-bg {
+  background: radial-gradient(
+    circle at 50% 100px,
+    #2b221a 0%,
+    #000000 80%
+  );
+  transition: background 0.5s ease;
+}
+
+@media (min-width: 768px) {
+  .md\:lamp-on-bg-desktop {
+    background: radial-gradient(
+      circle at 225px calc(50vh - 106px),
+      #2b221a 0%,
+      #000000 70%
+    ) !important;
+  }
+}
+
+/* Custom glow effect for the card */
+.glass-glow {
+  box-shadow: 
+    0 0 50px rgba(0, 0, 0, 0.9),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    0 0 30px rgba(139, 92, 246, 0.03);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0d0c0b;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c1917;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fbbf24;
+}
+
+/* Floating animation for particles */
+@keyframes float {
+  0% {
+    transform: translateY(100vh) translateX(0px) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-20px) translateX(25px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: absolute;
+  background: rgba(251, 191, 36, 0.35);
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: float 12s infinite linear;
+}
